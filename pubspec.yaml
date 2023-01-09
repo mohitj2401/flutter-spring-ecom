@@ -43,6 +43,8 @@ dependencies:
   intl: ^0.18.0
   flutter_bloc: ^8.1.1
   flutter_easyloading: ^3.0.5
+  fluttertoast: ^8.1.2
+  ndialog: ^4.2.3
 
 dev_dependencies:
   flutter_test:
