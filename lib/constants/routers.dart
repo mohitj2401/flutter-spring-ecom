@@ -11,7 +11,7 @@ final GoRouter routers = GoRouter(
   routes: [
     GoRoute(
       path: '/',
-      builder: (context, state) => WelcomeScreen(),
+      builder: (context, state) => HomeScreen(),
       // routes: retailersRoute,
     ),
     GoRoute(
