@@ -1,5 +1,6 @@
 import 'package:ecom_spring/constants/color.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:motion_tab_bar_v2/motion-badge.widget.dart';
 import 'package:motion_tab_bar_v2/motion-tab-bar.dart';
 import 'package:shimmer/shimmer.dart';
@@ -168,117 +169,124 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                       ),
                     ),
                   ),
-                ListView.builder(
-                  shrinkWrap: true,
-                  physics: NeverScrollableScrollPhysics(),
-                  padding: EdgeInsets.symmetric(horizontal: 10),
-                  itemBuilder: (context, index) {
-                    return Padding(
-                      padding: const EdgeInsets.only(bottom: 8.0),
-                      child: Card(
-                        color: Colors.white,
-                        elevation: 5,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(25),
-                        ),
-                        child: Container(
-                          padding: const EdgeInsets.all(10.0),
-                          //  width: 500,
-                          height: 180,
-                          child: Row(
-                            children: [
-                              Expanded(
-                                child: Container(
-                                  padding: EdgeInsets.all(15),
-                                  decoration: BoxDecoration(
-                                    color: shadowColor,
-                                    borderRadius: BorderRadius.circular(25),
-                                  ),
-                                  child: ClipRRect(
-                                    borderRadius: BorderRadius.circular(25),
-                                    child: Image.network(
-                                        'https://picsum.photos/200/300'),
-                                  ),
-                                ),
-                              ),
-                              SizedBox(
-                                width: 15,
-                              ),
-                              Expanded(
-                                  child: Container(
-                                padding: EdgeInsets.symmetric(vertical: 10),
-                                child: Column(
-                                  // mainAxisAlignment: MainAxisAlignment.start,
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Text(
-                                      "Product Name",
-                                      style: TextStyle(
-                                        color: textColor,
-                                        fontSize: 18,
-                                        fontWeight: FontWeight.bold,
+                if (!isLoading)
+                  ListView.builder(
+                    shrinkWrap: true,
+                    physics: NeverScrollableScrollPhysics(),
+                    padding: EdgeInsets.symmetric(horizontal: 10),
+                    itemBuilder: (context, index) {
+                      return InkWell(
+                        onTap: () {
+                          context.go('/home/products/1');
+                        },
+                        child: Padding(
+                          padding: const EdgeInsets.only(bottom: 8.0),
+                          child: Card(
+                            color: Colors.white,
+                            elevation: 5,
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(25),
+                            ),
+                            child: Container(
+                              padding: const EdgeInsets.all(10.0),
+                              //  width: 500,
+                              height: 180,
+                              child: Row(
+                                children: [
+                                  Expanded(
+                                    child: Container(
+                                      padding: EdgeInsets.all(15),
+                                      decoration: BoxDecoration(
+                                        color: shadowColor,
+                                        borderRadius: BorderRadius.circular(25),
+                                      ),
+                                      child: ClipRRect(
+                                        borderRadius: BorderRadius.circular(25),
+                                        child: Image.network(
+                                            'https://picsum.photos/200/300'),
                                       ),
                                     ),
-                                    Text(
-                                      "by Admin",
-                                      style: TextStyle(
-                                        color: textColor,
-                                        // fontSize: 15,
-                                        fontWeight: FontWeight.w400,
-                                      ),
-                                    ),
-                                    SizedBox(
-                                      height: 8,
-                                    ),
-                                    Text(
-                                      "Lorem Ipsum is simply dummy text of the printing and typesetting industry.",
-                                      maxLines: 2,
-                                      overflow: TextOverflow.ellipsis,
-                                      style: TextStyle(
-                                          height: 1.5,
-                                          color: textColor,
-                                          fontWeight: FontWeight.w500),
-                                    ),
-                                    // SizedBox(
-                                    //   height: 10,
-                                    // ),
-                                    Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
+                                  ),
+                                  SizedBox(
+                                    width: 15,
+                                  ),
+                                  Expanded(
+                                      child: Container(
+                                    padding: EdgeInsets.symmetric(vertical: 10),
+                                    child: Column(
+                                      // mainAxisAlignment: MainAxisAlignment.start,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
                                       children: [
                                         Text(
-                                          "₹234.00",
+                                          "Product Name",
                                           style: TextStyle(
                                             color: textColor,
+                                            fontSize: 18,
                                             fontWeight: FontWeight.bold,
                                           ),
                                         ),
-                                        ElevatedButton(
-                                          style: ElevatedButton.styleFrom(
-                                              elevation: 10,
-                                              shape: RoundedRectangleBorder(
-                                                  borderRadius:
-                                                      BorderRadius.circular(
-                                                          30)),
-                                              backgroundColor: darkbgColor,
-                                              padding: EdgeInsets.symmetric(
-                                                  horizontal: 10)),
-                                          onPressed: () {},
-                                          child: Text("Buy"),
+                                        Text(
+                                          "by Admin",
+                                          style: TextStyle(
+                                            color: textColor,
+                                            // fontSize: 15,
+                                            fontWeight: FontWeight.w400,
+                                          ),
+                                        ),
+                                        SizedBox(
+                                          height: 8,
+                                        ),
+                                        Text(
+                                          "Lorem Ipsum is simply dummy text of the printing and typesetting industry.",
+                                          maxLines: 2,
+                                          overflow: TextOverflow.ellipsis,
+                                          style: TextStyle(
+                                              height: 1.5,
+                                              color: textColor,
+                                              fontWeight: FontWeight.w500),
+                                        ),
+                                        // SizedBox(
+                                        //   height: 10,
+                                        // ),
+                                        Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceBetween,
+                                          children: [
+                                            Text(
+                                              "₹234.00",
+                                              style: TextStyle(
+                                                color: textColor,
+                                                fontWeight: FontWeight.bold,
+                                              ),
+                                            ),
+                                            ElevatedButton(
+                                              style: ElevatedButton.styleFrom(
+                                                  elevation: 10,
+                                                  shape: RoundedRectangleBorder(
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              30)),
+                                                  backgroundColor: darkbgColor,
+                                                  padding: EdgeInsets.symmetric(
+                                                      horizontal: 10)),
+                                              onPressed: () {},
+                                              child: Text("Buy"),
+                                            )
+                                          ],
                                         )
                                       ],
-                                    )
-                                  ],
-                                ),
-                              ))
-                            ],
+                                    ),
+                                  ))
+                                ],
+                              ),
+                            ),
                           ),
                         ),
-                      ),
-                    );
-                  },
-                  itemCount: 5,
-                )
+                      );
+                    },
+                    itemCount: 5,
+                  )
               ],
             ),
           ),

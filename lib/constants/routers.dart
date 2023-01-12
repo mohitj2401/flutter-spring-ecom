@@ -4,7 +4,6 @@ import 'package:ecom_spring/views/login.dart';
 import 'package:ecom_spring/views/product_detail.dart';
 import 'package:ecom_spring/views/profile.dart';
 import 'package:ecom_spring/views/register.dart';
-import 'package:ecom_spring/views/welcome.dart';
 import 'package:go_router/go_router.dart';
 
 final GoRouter routers = GoRouter(
