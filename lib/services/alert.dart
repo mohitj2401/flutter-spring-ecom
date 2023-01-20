@@ -8,7 +8,7 @@ class Alert {
         toastLength: Toast.LENGTH_SHORT,
         gravity: ToastGravity.CENTER,
         timeInSecForIosWeb: 1,
-        backgroundColor: Color.fromRGBO(25, 135, 84, 1),
+        backgroundColor: const Color.fromRGBO(25, 135, 84, 1),
         textColor: Colors.white,
         fontSize: 16.0);
   }
@@ -19,7 +19,7 @@ class Alert {
         toastLength: Toast.LENGTH_SHORT,
         gravity: ToastGravity.CENTER,
         timeInSecForIosWeb: 1,
-        backgroundColor: Color.fromRGBO(25, 135, 84, 1),
+        backgroundColor: const Color.fromRGBO(25, 135, 84, 1),
         textColor: Colors.white,
         fontSize: 16.0);
   }
@@ -30,7 +30,7 @@ class Alert {
       toastLength: Toast.LENGTH_SHORT,
       gravity: ToastGravity.CENTER,
       timeInSecForIosWeb: 1,
-      backgroundColor: Color.fromRGBO(25, 135, 84, 1),
+      backgroundColor: const Color.fromRGBO(25, 135, 84, 1),
       textColor: Colors.black,
       fontSize: 16.0,
     );
@@ -42,7 +42,7 @@ class Alert {
         toastLength: Toast.LENGTH_SHORT,
         gravity: ToastGravity.CENTER,
         timeInSecForIosWeb: 1,
-        backgroundColor: Color.fromRGBO(220, 53, 69, 1),
+        backgroundColor: const Color.fromRGBO(220, 53, 69, 1),
         textColor: Colors.white,
         fontSize: 16.0);
   }
@@ -53,7 +53,7 @@ class Alert {
         toastLength: Toast.LENGTH_SHORT,
         gravity: ToastGravity.CENTER,
         timeInSecForIosWeb: 1,
-        backgroundColor: Color.fromRGBO(220, 53, 69, 1),
+        backgroundColor: const Color.fromRGBO(220, 53, 69, 1),
         textColor: Colors.white,
         fontSize: 16.0);
   }

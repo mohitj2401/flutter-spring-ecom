@@ -1,7 +1,6 @@
 import 'package:ecom_spring/constants/color.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:motion_tab_bar_v2/motion-badge.widget.dart';
 import 'package:motion_tab_bar_v2/motion-tab-bar.dart';
 import 'package:shimmer/shimmer.dart';
 
@@ -64,13 +63,13 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
       body: SafeArea(
         child: SingleChildScrollView(
           child: Container(
-            padding: EdgeInsets.symmetric(vertical: 30, horizontal: 20),
+            padding: const EdgeInsets.symmetric(vertical: 30, horizontal: 20),
             // width: MediaQuery.of(context).size.width,
             child: Column(
               mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(
+                const Text(
                   "Best Products",
                   style: TextStyle(
                     color: textColor,
@@ -78,7 +77,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                     fontWeight: FontWeight.bold,
                   ),
                 ),
-                Text(
+                const Text(
                   "Perfect Choice!",
                   // textAlign: TextAlign.start,
                   style: TextStyle(
@@ -87,7 +86,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                     fontWeight: FontWeight.w400,
                   ),
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 20,
                 ),
                 Row(
@@ -101,16 +100,16 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                         border: OutlineInputBorder(
                             borderSide: BorderSide.none,
                             borderRadius: BorderRadius.circular(20)),
-                        prefixIcon: Icon(
+                        prefixIcon: const Icon(
                           Icons.search,
                           color: textColor,
                         ),
                       ),
                     )),
-                    IconButton(onPressed: () {}, icon: Icon(Icons.do_not_touch))
+                    IconButton(onPressed: () {}, icon: const Icon(Icons.do_not_touch))
                   ],
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 20,
                 ),
                 SizedBox(
@@ -123,11 +122,11 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                         color: index != 0 ? bgColor : darkbgColor,
                         shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(30)),
-                        margin: EdgeInsets.symmetric(horizontal: 5),
+                        margin: const EdgeInsets.symmetric(horizontal: 5),
                         elevation: index != 0 ? 0 : 10,
                         child: Padding(
                           // decoration: BoxDecoration(),
-                          padding: EdgeInsets.symmetric(
+                          padding: const EdgeInsets.symmetric(
                               horizontal: 15, vertical: 12),
                           child: Text(
                             category[index],
@@ -141,7 +140,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                     },
                   ),
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 20,
                 ),
                 if (isLoading)
@@ -172,8 +171,8 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                 if (!isLoading)
                   ListView.builder(
                     shrinkWrap: true,
-                    physics: NeverScrollableScrollPhysics(),
-                    padding: EdgeInsets.symmetric(horizontal: 10),
+                    physics: const NeverScrollableScrollPhysics(),
+                    padding: const EdgeInsets.symmetric(horizontal: 10),
                     itemBuilder: (context, index) {
                       return InkWell(
                         onTap: () {
@@ -195,7 +194,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                                 children: [
                                   Expanded(
                                     child: Container(
-                                      padding: EdgeInsets.all(15),
+                                      padding: const EdgeInsets.all(15),
                                       decoration: BoxDecoration(
                                         color: shadowColor,
                                         borderRadius: BorderRadius.circular(25),
@@ -203,22 +202,24 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                                       child: ClipRRect(
                                         borderRadius: BorderRadius.circular(25),
                                         child: Image.network(
-                                            'https://picsum.photos/200/300'),
+                                          'https://picsum.photos/200/300',
+                                          fit: BoxFit.fill,
+                                        ),
                                       ),
                                     ),
                                   ),
-                                  SizedBox(
+                                  const SizedBox(
                                     width: 15,
                                   ),
                                   Expanded(
                                       child: Container(
-                                    padding: EdgeInsets.symmetric(vertical: 10),
+                                    padding: const EdgeInsets.symmetric(vertical: 10),
                                     child: Column(
                                       // mainAxisAlignment: MainAxisAlignment.start,
                                       crossAxisAlignment:
                                           CrossAxisAlignment.start,
                                       children: [
-                                        Text(
+                                        const Text(
                                           "Product Name",
                                           style: TextStyle(
                                             color: textColor,
@@ -226,7 +227,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                                             fontWeight: FontWeight.bold,
                                           ),
                                         ),
-                                        Text(
+                                        const Text(
                                           "by Admin",
                                           style: TextStyle(
                                             color: textColor,
@@ -234,10 +235,10 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                                             fontWeight: FontWeight.w400,
                                           ),
                                         ),
-                                        SizedBox(
+                                        const SizedBox(
                                           height: 8,
                                         ),
-                                        Text(
+                                        const Text(
                                           "Lorem Ipsum is simply dummy text of the printing and typesetting industry.",
                                           maxLines: 2,
                                           overflow: TextOverflow.ellipsis,
@@ -246,14 +247,14 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                                               color: textColor,
                                               fontWeight: FontWeight.w500),
                                         ),
-                                        // SizedBox(
-                                        //   height: 10,
-                                        // ),
+                                        const SizedBox(
+                                          height: 5,
+                                        ),
                                         Row(
                                           mainAxisAlignment:
                                               MainAxisAlignment.spaceBetween,
                                           children: [
-                                            Text(
+                                            const Text(
                                               "₹234.00",
                                               style: TextStyle(
                                                 color: textColor,
@@ -268,10 +269,10 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                                                           BorderRadius.circular(
                                                               30)),
                                                   backgroundColor: darkbgColor,
-                                                  padding: EdgeInsets.symmetric(
+                                                  padding: const EdgeInsets.symmetric(
                                                       horizontal: 10)),
                                               onPressed: () {},
-                                              child: Text("Buy"),
+                                              child: const Text("Buy"),
                                             )
                                           ],
                                         )

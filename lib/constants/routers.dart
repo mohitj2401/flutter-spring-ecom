@@ -10,22 +10,22 @@ final GoRouter routers = GoRouter(
   routes: [
     GoRoute(
       path: '/',
-      builder: (context, state) => HomeScreen(),
+      builder: (context, state) => const CartDetailScreen(),
       // routes: retailersRoute,
     ),
     GoRoute(
       path: '/login',
-      builder: (context, state) => LoginScreen(),
+      builder: (context, state) => const LoginScreen(),
       // routes: retailersRoute,
     ),
     GoRoute(
       path: '/register',
-      builder: (context, state) => RegisterScreen(),
+      builder: (context, state) => const RegisterScreen(),
       // routes: retailersRoute,
     ),
     GoRoute(
       path: '/home',
-      builder: (context, state) => HomeScreen(),
+      builder: (context, state) => const HomeScreen(),
       routes: authRoutes,
     ),
   ],
@@ -33,8 +33,8 @@ final GoRouter routers = GoRouter(
 final authRoutes = [
   GoRoute(
     path: 'products/:pid',
-    builder: (context, state) => ProductDetailScreen(),
+    builder: (context, state) => const ProductDetailScreen(),
   ),
-  GoRoute(path: 'profile', builder: (context, state) => ProfileScreen()),
-  GoRoute(path: 'cart', builder: (context, state) => CartDetailScreen()),
+  GoRoute(path: 'profile', builder: (context, state) => const ProfileScreen()),
+  GoRoute(path: 'cart', builder: (context, state) => const CartDetailScreen()),
 ];

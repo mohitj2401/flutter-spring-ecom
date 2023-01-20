@@ -17,14 +17,14 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
     return Scaffold(
       backgroundColor: bgColor,
       body: SafeArea(
-          child: Container(
+          child: SizedBox(
         width: MediaQuery.of(context).size.width,
         // height: MediaQuery.of(context).size.height,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             Container(
-              margin: EdgeInsets.symmetric(horizontal: 20, vertical: 15),
+              margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 15),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
@@ -34,22 +34,22 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                     },
                     child: Container(
                       alignment: Alignment.center,
-                      padding: EdgeInsets.all(10),
+                      padding: const EdgeInsets.all(10),
                       decoration: BoxDecoration(
                         color: Colors.white,
                         borderRadius: BorderRadius.circular(10),
                       ),
-                      child: Icon(Icons.arrow_back_ios_new),
+                      child: const Icon(Icons.arrow_back_ios_new),
                     ),
                   ),
                   Container(
                     alignment: Alignment.center,
-                    padding: EdgeInsets.all(10),
+                    padding: const EdgeInsets.all(10),
                     decoration: BoxDecoration(
                       color: Colors.white,
                       borderRadius: BorderRadius.circular(10),
                     ),
-                    child: Icon(
+                    child: const Icon(
                       Icons.favorite,
                       color: Colors.red,
                     ),
@@ -58,9 +58,12 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
               ),
             ),
             Container(
-              margin: EdgeInsets.symmetric(horizontal: 20, vertical: 15),
+              margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 15),
               height: 180,
-              child: Image.network('https://picsum.photos/200/300'),
+              child: Image.network(
+                'https://picsum.photos/200/300',
+                fit: BoxFit.fill,
+              ),
             ),
             Expanded(
               child: Container(
@@ -68,12 +71,12 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                   margin: EdgeInsets.zero,
                   color: Colors.white,
                   shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.only(
+                      borderRadius: const BorderRadius.only(
                     topLeft: Radius.circular(30),
                     topRight: Radius.circular(30),
                   )),
                   child: Container(
-                    padding: EdgeInsets.symmetric(horizontal: 20, vertical: 20),
+                    padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
                     child: Column(
                       children: [
                         Row(
@@ -83,7 +86,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                             Column(
                               mainAxisAlignment: MainAxisAlignment.start,
                               crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
+                              children: const [
                                 Text(
                                   "Product Name",
                                   style: TextStyle(
@@ -103,14 +106,14 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                               ],
                             ),
                             Container(
-                              padding: EdgeInsets.symmetric(
+                              padding: const EdgeInsets.symmetric(
                                   vertical: 4, horizontal: 8),
                               decoration: BoxDecoration(
                                 border: Border.all(color: textColor),
                                 borderRadius: BorderRadius.circular(15),
                               ),
                               child: Row(
-                                children: [
+                                children: const [
                                   Icon(
                                     Icons.star,
                                     color: Color(0xffF9AE55),
@@ -127,11 +130,11 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                             )
                           ],
                         ),
-                        SizedBox(
+                        const SizedBox(
                           height: 10,
                         ),
                         Container(
-                          child: Text(
+                          child: const Text(
                             "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. ",
                             style: TextStyle(
                               color: textColor,
@@ -140,7 +143,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                             ),
                           ),
                         ),
-                        SizedBox(
+                        const SizedBox(
                           height: 20,
                         ),
                         Container(
@@ -148,7 +151,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Row(
-                              children: [
+                              children: const [
                                 Text(
                                   "Color : ",
                                   style: TextStyle(
@@ -183,7 +186,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                               ],
                             ),
                             Container(
-                              padding: EdgeInsets.symmetric(
+                              padding: const EdgeInsets.symmetric(
                                   horizontal: 4, vertical: 4),
                               decoration: BoxDecoration(
                                 color: bgColor,
@@ -200,19 +203,19 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                                           setState(() {});
                                         }
                                       },
-                                      child: Icon(
+                                      child: const Icon(
                                         Icons.remove,
                                         color: darkbgColor,
                                         size: 15,
                                       )),
-                                  SizedBox(
+                                  const SizedBox(
                                     width: 8,
                                   ),
                                   Text(
                                     quantity.toString(),
-                                    style: TextStyle(color: darkbgColor),
+                                    style: const TextStyle(color: darkbgColor),
                                   ),
-                                  SizedBox(
+                                  const SizedBox(
                                     width: 8,
                                   ),
                                   InkWell(
@@ -220,7 +223,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                                         quantity++;
                                         setState(() {});
                                       },
-                                      child: Icon(
+                                      child: const Icon(
                                         Icons.add,
                                         size: 15,
                                         color: darkbgColor,
@@ -243,12 +246,12 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
         margin: EdgeInsets.zero,
         elevation: 10,
         child: Container(
-          padding: EdgeInsets.symmetric(horizontal: 25, vertical: 15),
-          decoration: BoxDecoration(color: Colors.white),
+          padding: const EdgeInsets.symmetric(horizontal: 25, vertical: 15),
+          decoration: const BoxDecoration(color: Colors.white),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Text(
+              const Text(
                 "₹2002.00",
                 style: TextStyle(
                     color: darkbgColor,
@@ -259,12 +262,12 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                   onPressed: () {},
                   style: ElevatedButton.styleFrom(
                     backgroundColor: bgColor2,
-                    padding: EdgeInsets.symmetric(horizontal: 20, vertical: 12),
+                    padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(20),
                     ),
                   ),
-                  child: Text(
+                  child: const Text(
                     "Buy Now",
                     style: TextStyle(color: Colors.white),
                   ))
