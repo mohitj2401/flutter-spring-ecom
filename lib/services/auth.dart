@@ -8,10 +8,13 @@ class AuthService {
   String signupUrl = baseUrl + '/auth/signin';
   String profile = baseUrl + '/auth/user';
 
-  login() async {
+  login(password, username) async {
     EasyLoading.show(status: "Loading..");
     Dio dio = Dio();
-    Response response = await dio.post(loginUrl);
+    Response response = await dio.post(loginUrl, data: {
+      "username": username,
+      "password": password,
+    });
     EasyLoading.dismiss();
     if (response.statusCode == 200) {
       Alert.successLogin();
@@ -20,10 +23,15 @@ class AuthService {
     }
   }
 
-  signup() async {
+  signup(username, name, password, email) async {
     EasyLoading.show(status: "Loading..");
     Dio dio = Dio();
-    Response response = await dio.post(signupUrl);
+    Response response = await dio.post(signupUrl, data: {
+      "username": username,
+      "name": name,
+      "password": password,
+      "email": email
+    });
     EasyLoading.dismiss();
 
     if (response.statusCode == 200) {
