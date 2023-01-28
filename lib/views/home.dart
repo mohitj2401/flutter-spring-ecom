@@ -1,4 +1,7 @@
 import 'package:ecom_spring/constants/color.dart';
+import 'package:ecom_spring/constants/variables.dart';
+import 'package:ecom_spring/models/product.dart';
+import 'package:ecom_spring/services/product_service.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:motion_tab_bar_v2/motion-tab-bar.dart';
@@ -13,11 +16,25 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
   List category = ["All", "Books", "Phones", "Badges"];
-  bool isLoading = false;
+  bool isLoading = true;
   String selectTab = "Home";
+  List<Product> products = [];
+  getProduct() {
+    ProductService _productService = ProductService();
+    _productService.get().then((value) {
+      if (value.statusCode == 200) {
+        products = value.output! as List<Product>;
+      }
+      setState(() {
+        isLoading = false;
+      });
+    });
+  }
+
   // late TabController _tabController;
   @override
   void initState() {
+    getProduct();
     // TODO: implement initState
     super.initState();
     // _tabController = TabController(
@@ -150,28 +167,29 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                   height: 20,
                 ),
                 if (isLoading)
-                  Expanded(
-                    child: Shimmer.fromColors(
-                      baseColor: Colors.grey.shade300,
-                      highlightColor: Colors.grey.shade100,
-                      enabled: isLoading,
-                      child: ListView.builder(
-                        itemBuilder: (_, __) => Padding(
-                          padding: const EdgeInsets.only(bottom: 8.0),
-                          child: Card(
-                            color: Colors.white,
-                            elevation: 5,
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(30),
-                            ),
-                            child: Container(
-                              //  width: 500,
-                              height: 150,
-                            ),
+                  Shimmer.fromColors(
+                    baseColor: Colors.grey.shade300,
+                    highlightColor: Colors.grey.shade100,
+                    enabled: isLoading,
+                    child: ListView.builder(
+                      shrinkWrap: true,
+                      physics: const NeverScrollableScrollPhysics(),
+                      padding: const EdgeInsets.symmetric(horizontal: 10),
+                      itemBuilder: (_, __) => Padding(
+                        padding: const EdgeInsets.only(bottom: 8.0),
+                        child: Card(
+                          color: Colors.white,
+                          elevation: 5,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(30),
+                          ),
+                          child: Container(
+                            //  width: 500,
+                            height: 150,
                           ),
                         ),
-                        itemCount: 3,
                       ),
+                      itemCount: 3,
                     ),
                   ),
                 if (!isLoading)
@@ -182,7 +200,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                     itemBuilder: (context, index) {
                       return InkWell(
                         onTap: () {
-                          context.go('/home/products/1');
+                          context.go('/home/products/${products[index].id}');
                         },
                         child: Padding(
                           padding: const EdgeInsets.only(bottom: 8.0),
@@ -208,7 +226,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                                       child: ClipRRect(
                                         borderRadius: BorderRadius.circular(25),
                                         child: Image.network(
-                                          'https://picsum.photos/200/300',
+                                          "$imageUrl${products[index].imgUrl}",
                                           fit: BoxFit.fill,
                                         ),
                                       ),
@@ -222,15 +240,16 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                                     padding: const EdgeInsets.symmetric(
                                         vertical: 10),
                                     child: Column(
-                                      // mainAxisAlignment: MainAxisAlignment.start,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
                                       crossAxisAlignment:
                                           CrossAxisAlignment.start,
                                       children: [
-                                        const Text(
-                                          "Product Name",
+                                        Text(
+                                          products[index].name ?? "",
                                           style: TextStyle(
                                             color: textColor,
-                                            fontSize: 18,
+                                            fontSize: 15,
                                             fontWeight: FontWeight.bold,
                                           ),
                                         ),
@@ -238,21 +257,23 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                                           "by Admin",
                                           style: TextStyle(
                                             color: textColor,
-                                            // fontSize: 15,
+                                            fontSize: 11,
                                             fontWeight: FontWeight.w400,
                                           ),
                                         ),
                                         const SizedBox(
                                           height: 8,
                                         ),
-                                        const Text(
-                                          "Lorem Ipsum is simply dummy text of the printing and typesetting industry.",
-                                          maxLines: 2,
+                                        Text(
+                                          products[index].description ?? "",
+                                          maxLines: 1,
                                           overflow: TextOverflow.ellipsis,
                                           style: TextStyle(
-                                              height: 1.5,
-                                              color: textColor,
-                                              fontWeight: FontWeight.w500),
+                                            // height: 1.1,
+                                            color: textColor,
+                                            fontSize: 13,
+                                            fontWeight: FontWeight.w500,
+                                          ),
                                         ),
                                         const SizedBox(
                                           height: 5,
@@ -261,8 +282,8 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                                           mainAxisAlignment:
                                               MainAxisAlignment.spaceBetween,
                                           children: [
-                                            const Text(
-                                              "₹234.00",
+                                            Text(
+                                              "₹ ${products[index].unitPrice}",
                                               style: TextStyle(
                                                 color: textColor,
                                                 fontWeight: FontWeight.bold,
@@ -294,7 +315,12 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                         ),
                       );
                     },
-                    itemCount: 5,
+                    itemCount: products.length,
+                  ),
+                if (products.length == 0)
+                  Container(
+                    alignment: Alignment.center,
+                    child: Text("No Product Find"),
                   )
               ],
             ),
