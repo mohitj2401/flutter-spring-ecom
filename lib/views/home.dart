@@ -14,23 +14,24 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
   List category = ["All", "Books", "Phones", "Badges"];
   bool isLoading = false;
-  late TabController _tabController;
+  String selectTab = "Home";
+  // late TabController _tabController;
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-    _tabController = TabController(
-      initialIndex: 1,
-      length: 4,
-      vsync: this,
-    );
+    // _tabController = TabController(
+    //   initialIndex: 0,
+    //   length: 4,
+    //   vsync: this,
+    // );
   }
 
   @override
   void dispose() {
     // TODO: implement dispose
     super.dispose();
-    _tabController.dispose();
+    // _tabController.dispose();
   }
 
   @override
@@ -38,7 +39,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
     return Scaffold(
       backgroundColor: bgColor,
       bottomNavigationBar: MotionTabBar(
-        initialSelectedTab: "Home",
+        initialSelectedTab: selectTab,
         labels: const ["Home", "Cart", "Favirote", "Profile"],
         icons: const [Icons.home, Icons.shopping_bag, Icons.star, Icons.person],
         tabSize: 50,
@@ -55,9 +56,13 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
         tabIconSelectedColor: Colors.white,
         tabBarColor: Colors.white,
         onTabItemSelected: (int value) {
-          setState(() {
-            _tabController.index = value;
-          });
+          // setState(() {
+          //   _tabController.index = value;
+          // });
+          // print(_tabController.index = 0);
+          if (value == 1) {
+            context.go('/home/cart');
+          }
         },
       ),
       body: SafeArea(
@@ -106,7 +111,8 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                         ),
                       ),
                     )),
-                    IconButton(onPressed: () {}, icon: const Icon(Icons.do_not_touch))
+                    IconButton(
+                        onPressed: () {}, icon: const Icon(Icons.do_not_touch))
                   ],
                 ),
                 const SizedBox(
@@ -213,7 +219,8 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                                   ),
                                   Expanded(
                                       child: Container(
-                                    padding: const EdgeInsets.symmetric(vertical: 10),
+                                    padding: const EdgeInsets.symmetric(
+                                        vertical: 10),
                                     child: Column(
                                       // mainAxisAlignment: MainAxisAlignment.start,
                                       crossAxisAlignment:
@@ -269,7 +276,8 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                                                           BorderRadius.circular(
                                                               30)),
                                                   backgroundColor: darkbgColor,
-                                                  padding: const EdgeInsets.symmetric(
+                                                  padding: const EdgeInsets
+                                                          .symmetric(
                                                       horizontal: 10)),
                                               onPressed: () {},
                                               child: const Text("Buy"),

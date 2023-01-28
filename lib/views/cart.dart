@@ -1,5 +1,6 @@
 import 'package:ecom_spring/constants/color.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 class CartDetailScreen extends StatefulWidget {
   const CartDetailScreen({Key? key}) : super(key: key);
@@ -107,14 +108,19 @@ class _CartDetailScreenState extends State<CartDetailScreen> {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Container(
-                      padding: const EdgeInsets.all(10),
-                      child: const CircleAvatar(
-                        radius: 20,
-                        backgroundColor: darkbgColor,
-                        child: Icon(
-                          Icons.arrow_back,
-                          color: Colors.white,
+                    InkWell(
+                      onTap: () {
+                        context.pop();
+                      },
+                      child: Container(
+                        padding: const EdgeInsets.all(10),
+                        child: const CircleAvatar(
+                          radius: 20,
+                          backgroundColor: darkbgColor,
+                          child: Icon(
+                            Icons.arrow_back,
+                            color: Colors.white,
+                          ),
                         ),
                       ),
                     ),

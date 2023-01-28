@@ -1,5 +1,8 @@
+import 'package:ecom_spring/services/alert.dart';
+import 'package:ecom_spring/services/auth.dart';
 import 'package:ecom_spring/widgets/textFieldWithLable.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({Key? key}) : super(key: key);
@@ -12,6 +15,22 @@ class _LoginScreenState extends State<LoginScreen> {
   TextEditingController username = TextEditingController();
 
   TextEditingController password = TextEditingController();
+
+  var formKey = GlobalKey<FormState>();
+
+  login() {
+    if (formKey.currentState!.validate()) {
+      AuthService _auth = AuthService();
+      _auth.login(password.text, username.text).then((value) {
+        if (value) {
+          context.go('/home');
+          Alert.successLogin();
+        } else {
+          Alert.errorMessage("Username or Password is incorrect");
+        }
+      });
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -37,6 +56,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 height: 30,
               ),
               Form(
+                key: formKey,
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.start,
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -77,7 +97,9 @@ class _LoginScreenState extends State<LoginScreen> {
                     ),
                     backgroundColor: Colors.white,
                   ),
-                  onPressed: () {},
+                  onPressed: () {
+                    login();
+                  },
                   child: const Text(
                     "Login",
                     style: TextStyle(
@@ -101,11 +123,16 @@ class _LoginScreenState extends State<LoginScreen> {
                       fontWeight: FontWeight.w400,
                     ),
                   ),
-                  const Text(
-                    " Sign Up",
-                    style: TextStyle(
-                      color: Colors.yellow,
-                      fontWeight: FontWeight.w400,
+                  InkWell(
+                    onTap: () {
+                      context.go('/register');
+                    },
+                    child: const Text(
+                      " Sign Up",
+                      style: TextStyle(
+                        color: Colors.yellow,
+                        fontWeight: FontWeight.w400,
+                      ),
                     ),
                   ),
                 ],

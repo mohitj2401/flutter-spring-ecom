@@ -5,13 +5,14 @@ import 'package:ecom_spring/views/payment.dart';
 import 'package:ecom_spring/views/product_detail.dart';
 import 'package:ecom_spring/views/profile.dart';
 import 'package:ecom_spring/views/register.dart';
+import 'package:ecom_spring/views/splashscreen.dart';
 import 'package:go_router/go_router.dart';
 
 final GoRouter routers = GoRouter(
   routes: [
     GoRoute(
       path: '/',
-      builder: (context, state) => const PaymentScreen(),
+      builder: (context, state) => const SplashScreen(),
       // routes: retailersRoute,
     ),
     GoRoute(

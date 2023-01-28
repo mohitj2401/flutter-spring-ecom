@@ -35,6 +35,8 @@ Widget getTextFieldWithLable({
         height: 15,
       ),
       TextFormField(
+        controller: textEditingController,
+        style: const TextStyle(color: Colors.white),
         validator: onValidate,
         obscureText: isObsecure,
         decoration: InputDecoration(
