@@ -29,6 +29,6 @@ class Product {
     imgUrl = json['imageUrl'];
     unitPrice = json['unitPrice'];
     unitsInStock = json['unitsInStock'];
-    productCategory = ProductCategory.fromJson(json['category']);
+    productCategory = ProductCategory.fromMap(json['category']);
   }
 }

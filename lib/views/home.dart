@@ -1,6 +1,8 @@
 import 'package:ecom_spring/constants/color.dart';
 import 'package:ecom_spring/constants/variables.dart';
 import 'package:ecom_spring/models/product.dart';
+import 'package:ecom_spring/models/productCategory.dart';
+import 'package:ecom_spring/services/category_service.dart';
 import 'package:ecom_spring/services/product_service.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
@@ -19,6 +21,10 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
   bool isLoading = true;
   String selectTab = "Home";
   List<Product> products = [];
+  int selectedCategoryId = 0;
+  List<ProductCategory> categories = [ProductCategory("All", 0)];
+
+  TextEditingController search = TextEditingController();
   getProduct() {
     ProductService _productService = ProductService();
     _productService.get().then((value) {
@@ -31,10 +37,57 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
     });
   }
 
+  getProductByCategoryId() {
+    ProductService _productService = ProductService();
+    if (categories[selectedCategoryId].id == 0) {
+      getProduct();
+      return;
+    }
+    _productService
+        .getProductByCategory(categories[selectedCategoryId].id)
+        .then((value) {
+      if (value.statusCode == 200) {
+        products = value.output! as List<Product>;
+      }
+      setState(() {
+        isLoading = false;
+      });
+    });
+  }
+
+  searchProduct() {
+    ProductService _productService = ProductService();
+    if (search.text == '') {
+      getProduct();
+      return;
+    }
+    _productService.searchProduct(search.text).then((value) {
+      if (value.statusCode == 200) {
+        products = value.output! as List<Product>;
+      }
+      setState(() {
+        isLoading = false;
+      });
+    });
+  }
+
+  getCategory() {
+    CategoryService _categoryService = CategoryService();
+    _categoryService.get().then((value) {
+      if (value.statusCode == 200) {
+        categories.addAll(value.output! as List<ProductCategory>);
+      }
+      setState(() {
+        isLoading = false;
+      });
+    });
+  }
+
   // late TabController _tabController;
   @override
   void initState() {
     getProduct();
+    getCategory();
     // TODO: implement initState
     super.initState();
     // _tabController = TabController(
@@ -115,6 +168,14 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                   children: [
                     Expanded(
                         child: TextFormField(
+                      controller: search,
+                      onEditingComplete: () {
+                        searchProduct();
+                        setState(() {
+                          selectedCategoryId = 0;
+                          isLoading = true;
+                        });
+                      },
                       decoration: InputDecoration(
                         hintText: "Search..",
                         filled: true,
@@ -139,23 +200,37 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                   height: 40,
                   child: ListView.builder(
                     scrollDirection: Axis.horizontal,
-                    itemCount: category.length,
+                    itemCount: categories.length,
                     itemBuilder: (context, index) {
-                      return Card(
-                        color: index != 0 ? bgColor : darkbgColor,
-                        shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(30)),
-                        margin: const EdgeInsets.symmetric(horizontal: 5),
-                        elevation: index != 0 ? 0 : 10,
-                        child: Padding(
-                          // decoration: BoxDecoration(),
-                          padding: const EdgeInsets.symmetric(
-                              horizontal: 15, vertical: 12),
-                          child: Text(
-                            category[index],
-                            style: TextStyle(
-                              color: index == 0 ? Colors.white : textColor,
-                              fontWeight: FontWeight.w600,
+                      return InkWell(
+                        onTap: () {
+                          selectedCategoryId = index;
+                          isLoading = true;
+                          setState(() {});
+
+                          getProductByCategoryId();
+                          // setState(() {});
+                        },
+                        child: Card(
+                          color: index != selectedCategoryId
+                              ? bgColor
+                              : darkbgColor,
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(30)),
+                          margin: const EdgeInsets.symmetric(horizontal: 5),
+                          elevation: index != selectedCategoryId ? 0 : 10,
+                          child: Padding(
+                            // decoration: BoxDecoration(),
+                            padding: const EdgeInsets.symmetric(
+                                horizontal: 15, vertical: 12),
+                            child: Text(
+                              categories[index].categoryName,
+                              style: TextStyle(
+                                color: index == selectedCategoryId
+                                    ? Colors.white
+                                    : textColor,
+                                fontWeight: FontWeight.w600,
+                              ),
                             ),
                           ),
                         ),

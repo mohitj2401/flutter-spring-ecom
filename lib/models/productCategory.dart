@@ -1,12 +1,28 @@
-class ProductCategory {
-  String? code;
-  String? name;
-  int? id;
-  ProductCategory({this.code, this.name, this.id});
+// ignore_for_file: public_member_api_docs, sort_constructors_first
+import 'dart:convert';
 
-  ProductCategory.fromJson(Map<String, dynamic> json) {
-    code = json['code'];
-    id = json['id'];
-    name = json['categoryName'];
+class ProductCategory {
+  // String? code;
+  String categoryName;
+  int id;
+  ProductCategory(this.categoryName, this.id);
+
+  Map<String, dynamic> toMap() {
+    return <String, dynamic>{
+      'categoryName': categoryName,
+      'id': id,
+    };
   }
+
+  factory ProductCategory.fromMap(Map<String, dynamic> map) {
+    return ProductCategory(
+      map['categoryName'] ?? "" as String,
+      map['id'] ?? null as int,
+    );
+  }
+
+  String toJson() => json.encode(toMap());
+
+  factory ProductCategory.fromJson(String source) =>
+      ProductCategory.fromMap(json.decode(source) as Map<String, dynamic>);
 }
