@@ -35,7 +35,9 @@ final GoRouter routers = GoRouter(
 final authRoutes = [
   GoRoute(
     path: 'products/:pid',
-    builder: (context, state) => const ProductDetailScreen(),
+    builder: (context, state) => ProductDetailScreen(
+      productId: state.params['pid']!,
+    ),
   ),
   GoRoute(path: 'profile', builder: (context, state) => const ProfileScreen()),
   GoRoute(path: 'cart', builder: (context, state) => const CartDetailScreen()),

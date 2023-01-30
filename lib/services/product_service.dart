@@ -102,4 +102,30 @@ class ProductService {
       return ResponseModel(message: 'No Output', output: null, statusCode: 200);
     }
   }
+
+  Future<ResponseModel> productDetail(String id) async {
+    try {
+      // EasyLoading.show(status: "Loading..");
+      Dio dio = Dio();
+      Response response = await dio.get(productFetch + "/$id");
+      if (response.statusCode == 200) {
+        Product? product;
+        if (response.data == null || response.data.isEmpty) {
+        } else {
+          product = new Product.fromJson(response.data);
+        }
+        // Alert.successLogin();
+        return ResponseModel(
+            message: 'No Output', output: product, statusCode: 200);
+      } else {
+        Alert.error();
+      }
+      return ResponseModel(message: 'No Output', output: null, statusCode: 200);
+    } on DioError catch (er) {
+      return ResponseModel(message: 'No Output', output: null, statusCode: 200);
+    } catch (e) {
+      print(e.toString());
+      return ResponseModel(message: 'No Output', output: null, statusCode: 200);
+    }
+  }
 }
