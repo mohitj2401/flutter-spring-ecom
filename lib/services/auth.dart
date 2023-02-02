@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'dart:io';
 
 import 'package:dio/dio.dart';
 import 'package:ecom_spring/constants/variables.dart';
@@ -62,7 +61,8 @@ class AuthService {
       EasyLoading.dismiss();
 
       if (response.statusCode == 200) {
-        Alert.successLogin();
+        pref.setString("TOKEN", response.data['token']);
+        Alert.successMessage("Register Successfully");
         return true;
       } else {
         Alert.error();

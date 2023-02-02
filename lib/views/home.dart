@@ -1,6 +1,3 @@
-import 'package:awesome_bottom_bar/awesome_bottom_bar.dart';
-import 'package:awesome_bottom_bar/widgets/inspired/inspired.dart';
-import 'package:circle_nav_bar/circle_nav_bar.dart';
 import 'package:ecom_spring/constants/color.dart';
 import 'package:ecom_spring/constants/variables.dart';
 import 'package:ecom_spring/models/product.dart';
@@ -11,7 +8,6 @@ import 'package:ecom_spring/widgets/bottomNavigation.dart';
 // import 'package:fancy_bottom_navigation/fancy_bottom_navigation.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:motion_tab_bar_v2/motion-tab-bar.dart';
 import 'package:shimmer/shimmer.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -279,7 +275,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                                       child: ClipRRect(
                                         borderRadius: BorderRadius.circular(25),
                                         child: Image.network(
-                                          "$imageUrl${products[index].imgUrl}",
+                                          "$imageUrl${products[index].imageUrl}",
                                           fit: BoxFit.fill,
                                         ),
                                       ),
@@ -300,7 +296,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                                       children: [
                                         Text(
                                           products[index].name ?? "",
-                                          style: TextStyle(
+                                          style: const TextStyle(
                                             color: textColor,
                                             fontSize: 15,
                                             fontWeight: FontWeight.bold,
@@ -321,7 +317,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                                           products[index].description ?? "",
                                           maxLines: 1,
                                           overflow: TextOverflow.ellipsis,
-                                          style: TextStyle(
+                                          style: const TextStyle(
                                             // height: 1.1,
                                             color: textColor,
                                             fontSize: 13,
@@ -337,7 +333,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                                           children: [
                                             Text(
                                               "₹ ${products[index].unitPrice}",
-                                              style: TextStyle(
+                                              style: const TextStyle(
                                                 color: textColor,
                                                 fontWeight: FontWeight.bold,
                                               ),
@@ -370,10 +366,10 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                     },
                     itemCount: products.length,
                   ),
-                if (products.length == 0)
+                if (products.isEmpty)
                   Container(
                     alignment: Alignment.center,
-                    child: Text("No Product Find"),
+                    child: const Text("No Product Find"),
                   )
               ],
             ),

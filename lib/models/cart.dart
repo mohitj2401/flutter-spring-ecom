@@ -36,7 +36,7 @@ class Cart {
       userId: map['userId'] != null ? map['userId'] as int : null,
       cartDetails: map['cartDetails'] != null
           ? List<CartDetail>.from(
-              (map['cartDetails'] as List<int>).map<CartDetail?>(
+              (map['cartDetails'] as List<dynamic>).map<CartDetail?>(
                 (x) => CartDetail.fromMap(x as Map<String, dynamic>),
               ),
             )

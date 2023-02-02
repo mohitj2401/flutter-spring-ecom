@@ -16,7 +16,7 @@ class ProductCategory {
 
   factory ProductCategory.fromMap(Map<String, dynamic> map) {
     return ProductCategory(
-      map['categoryName'] ?? "" as String,
+      map['categoryName'] ?? "",
       map['id'] ?? null as int,
     );
   }

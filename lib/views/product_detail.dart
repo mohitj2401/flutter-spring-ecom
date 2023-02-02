@@ -1,7 +1,9 @@
 import 'package:ecom_spring/constants/color.dart';
 import 'package:ecom_spring/constants/variables.dart';
+import 'package:ecom_spring/models/cart-detail.dart';
 import 'package:ecom_spring/models/product.dart';
 import 'package:ecom_spring/services/product_service.dart';
+import 'package:ecom_spring/services/shopping.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:shimmer/shimmer.dart';
@@ -29,6 +31,15 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
         isLoading = false;
       });
     });
+  }
+
+  addToCart() {
+    CartDetail cartDetail = CartDetail(
+        product_id: product.id,
+        quantity: quantity,
+        unit_price: product.unitPrice);
+    ShoppingService shoppingService = ShoppingService();
+    shoppingService.addToCart(cartDetail).then((value) => print(value));
   }
 
   @override
@@ -89,7 +100,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                     const EdgeInsets.symmetric(horizontal: 20, vertical: 15),
                 height: 180,
                 child: Image.network(
-                  "$imageUrl${product.imgUrl}",
+                  "$imageUrl${product.imageUrl}",
                   fit: BoxFit.fill,
                 ),
               ),
@@ -99,8 +110,8 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                   child: Card(
                     margin: EdgeInsets.zero,
                     color: Colors.white,
-                    shape: RoundedRectangleBorder(
-                        borderRadius: const BorderRadius.only(
+                    shape: const RoundedRectangleBorder(
+                        borderRadius: BorderRadius.only(
                       topLeft: Radius.circular(30),
                       topRight: Radius.circular(30),
                     )),
@@ -119,13 +130,13 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                                 children: [
                                   Text(
                                     product.name!,
-                                    style: TextStyle(
+                                    style: const TextStyle(
                                       color: textColor,
                                       fontSize: 18,
                                       fontWeight: FontWeight.bold,
                                     ),
                                   ),
-                                  Text(
+                                  const Text(
                                     "by Admin",
                                     style: TextStyle(
                                       color: textColor,
@@ -166,7 +177,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                           Container(
                             child: Text(
                               product.description!,
-                              style: TextStyle(
+                              style: const TextStyle(
                                 color: textColor,
                                 height: 1.5,
                                 fontWeight: FontWeight.w400,
@@ -290,8 +301,8 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                 child: Card(
                   margin: EdgeInsets.zero,
                   color: Colors.white,
-                  shape: RoundedRectangleBorder(
-                      borderRadius: const BorderRadius.only(
+                  shape: const RoundedRectangleBorder(
+                      borderRadius: BorderRadius.only(
                     topLeft: Radius.circular(30),
                     topRight: Radius.circular(30),
                   )),
@@ -337,13 +348,15 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
             children: [
               Text(
                 isLoading == false ? "₹${quantity * product.unitPrice!}" : "",
-                style: TextStyle(
+                style: const TextStyle(
                     color: darkbgColor,
                     fontSize: 20,
                     fontWeight: FontWeight.bold),
               ),
               ElevatedButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    addToCart();
+                  },
                   style: ElevatedButton.styleFrom(
                     backgroundColor: bgColor2,
                     padding: const EdgeInsets.symmetric(

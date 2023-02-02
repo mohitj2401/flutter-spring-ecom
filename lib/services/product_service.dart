@@ -3,7 +3,6 @@ import 'package:ecom_spring/constants/variables.dart';
 import 'package:ecom_spring/models/product.dart';
 import 'package:ecom_spring/models/response.dart';
 import 'package:ecom_spring/services/Alert.dart';
-import 'package:flutter_easyloading/flutter_easyloading.dart';
 
 class ProductService {
   String productSearch = baseUrl + 'products/search/';
@@ -23,7 +22,7 @@ class ProductService {
             response.data['content'].isEmpty) {
         } else {
           response.data['content'].forEach((ele) {
-            product.add(new Product.fromJson(ele));
+            product.add(Product.fromMap(ele));
           });
         }
         // Alert.successLogin();
@@ -33,7 +32,7 @@ class ProductService {
         Alert.error();
       }
       return ResponseModel(message: 'No Output', output: null, statusCode: 200);
-    } on DioError catch (er) {
+    } on DioError {
       return ResponseModel(message: 'No Output', output: null, statusCode: 200);
     } catch (e) {
       print(e.toString());
@@ -54,7 +53,7 @@ class ProductService {
             response.data['content'].isEmpty) {
         } else {
           response.data['content'].forEach((ele) {
-            product.add(new Product.fromJson(ele));
+            product.add(Product.fromJson(ele));
           });
         }
         // Alert.successLogin();
@@ -64,7 +63,7 @@ class ProductService {
         Alert.error();
       }
       return ResponseModel(message: 'No Output', output: null, statusCode: 200);
-    } on DioError catch (er) {
+    } on DioError {
       return ResponseModel(message: 'No Output', output: null, statusCode: 200);
     } catch (e) {
       print(e.toString());
@@ -85,7 +84,7 @@ class ProductService {
             response.data['content'].isEmpty) {
         } else {
           response.data['content'].forEach((ele) {
-            product.add(new Product.fromJson(ele));
+            product.add(Product.fromJson(ele));
           });
         }
         // Alert.successLogin();
@@ -95,7 +94,7 @@ class ProductService {
         Alert.error();
       }
       return ResponseModel(message: 'No Output', output: null, statusCode: 200);
-    } on DioError catch (er) {
+    } on DioError {
       return ResponseModel(message: 'No Output', output: null, statusCode: 200);
     } catch (e) {
       print(e.toString());
@@ -112,7 +111,7 @@ class ProductService {
         Product? product;
         if (response.data == null || response.data.isEmpty) {
         } else {
-          product = new Product.fromJson(response.data);
+          product = Product.fromMap(response.data);
         }
         // Alert.successLogin();
         return ResponseModel(
@@ -121,7 +120,7 @@ class ProductService {
         Alert.error();
       }
       return ResponseModel(message: 'No Output', output: null, statusCode: 200);
-    } on DioError catch (er) {
+    } on DioError {
       return ResponseModel(message: 'No Output', output: null, statusCode: 200);
     } catch (e) {
       print(e.toString());

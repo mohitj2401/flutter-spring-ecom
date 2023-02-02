@@ -47,11 +47,11 @@ final authRoutes = [
     routes: [
       GoRoute(
         path: 'checkout',
-        builder: (context, state) => CheckoutScreen(),
+        builder: (context, state) => const CheckoutScreen(),
       ),
       GoRoute(
         path: 'payment',
-        builder: (context, state) => PaymentScreen(),
+        builder: (context, state) => const PaymentScreen(),
       )
     ],
   ),

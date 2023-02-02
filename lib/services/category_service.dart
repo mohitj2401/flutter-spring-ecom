@@ -1,6 +1,5 @@
 import 'package:dio/dio.dart';
 import 'package:ecom_spring/constants/variables.dart';
-import 'package:ecom_spring/models/product.dart';
 import 'package:ecom_spring/models/productCategory.dart';
 import 'package:ecom_spring/models/response.dart';
 import 'package:ecom_spring/services/Alert.dart';
@@ -21,7 +20,7 @@ class CategoryService {
         if (response.data == null || response.data.isEmpty) {
         } else {
           response.data.forEach((ele) {
-            categories.add(new ProductCategory.fromMap(ele));
+            categories.add(ProductCategory.fromMap(ele));
           });
         }
         // Alert.successLogin();
@@ -31,7 +30,7 @@ class CategoryService {
         Alert.error();
       }
       return ResponseModel(message: 'No Output', output: null, statusCode: 200);
-    } on DioError catch (er) {
+    } on DioError {
       return ResponseModel(message: 'No Output', output: null, statusCode: 200);
     } catch (e) {
       print(e.toString());

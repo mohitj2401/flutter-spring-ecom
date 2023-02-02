@@ -5,15 +5,15 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
 List<TabItem> items = [
-  TabItem(
+  const TabItem(
     icon: Icons.home,
     title: 'Home',
   ),
-  TabItem(
+  const TabItem(
     icon: Icons.shopping_cart_outlined,
     title: 'Cart',
   ),
-  TabItem(
+  const TabItem(
     icon: Icons.account_box,
     title: 'profile',
   ),
@@ -30,6 +30,9 @@ Widget getBottomNavigationBar(BuildContext context, int visit) {
       // visit = index;
       if (index == 1) {
         context.go('/home/cart');
+      }
+      if (index == 0) {
+        context.go('/home');
       }
       // visit = 1;
     },
