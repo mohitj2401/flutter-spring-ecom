@@ -1,4 +1,5 @@
 import 'package:ecom_spring/views/cart.dart';
+import 'package:ecom_spring/views/checkout.dart';
 import 'package:ecom_spring/views/home.dart';
 import 'package:ecom_spring/views/login.dart';
 import 'package:ecom_spring/views/payment.dart';
@@ -40,5 +41,18 @@ final authRoutes = [
     ),
   ),
   GoRoute(path: 'profile', builder: (context, state) => const ProfileScreen()),
-  GoRoute(path: 'cart', builder: (context, state) => const CartDetailScreen()),
+  GoRoute(
+    path: 'cart',
+    builder: (context, state) => const CartDetailScreen(),
+    routes: [
+      GoRoute(
+        path: 'checkout',
+        builder: (context, state) => CheckoutScreen(),
+      ),
+      GoRoute(
+        path: 'payment',
+        builder: (context, state) => PaymentScreen(),
+      )
+    ],
+  ),
 ];

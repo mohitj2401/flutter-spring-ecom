@@ -15,6 +15,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.9.0"
+  awesome_bottom_bar:
+    dependency: "direct main"
+    description:
+      name: awesome_bottom_bar
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "1.2.2"
   bloc:
     dependency: transitive
     description:
@@ -36,6 +43,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.2.1"
+  circle_nav_bar:
+    dependency: "direct main"
+    description:
+      name: circle_nav_bar
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "2.0.1+1"
   clock:
     dependency: transitive
     description:

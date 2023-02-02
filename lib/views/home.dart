@@ -1,9 +1,14 @@
+import 'package:awesome_bottom_bar/awesome_bottom_bar.dart';
+import 'package:awesome_bottom_bar/widgets/inspired/inspired.dart';
+import 'package:circle_nav_bar/circle_nav_bar.dart';
 import 'package:ecom_spring/constants/color.dart';
 import 'package:ecom_spring/constants/variables.dart';
 import 'package:ecom_spring/models/product.dart';
 import 'package:ecom_spring/models/productCategory.dart';
 import 'package:ecom_spring/services/category_service.dart';
 import 'package:ecom_spring/services/product_service.dart';
+import 'package:ecom_spring/widgets/bottomNavigation.dart';
+// import 'package:fancy_bottom_navigation/fancy_bottom_navigation.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:motion_tab_bar_v2/motion-tab-bar.dart';
@@ -17,9 +22,8 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
-  List category = ["All", "Books", "Phones", "Badges"];
   bool isLoading = true;
-  String selectTab = "Home";
+
   List<Product> products = [];
   int selectedCategoryId = 0;
   List<ProductCategory> categories = [ProductCategory("All", 0)];
@@ -108,33 +112,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: bgColor,
-      bottomNavigationBar: MotionTabBar(
-        initialSelectedTab: selectTab,
-        labels: const ["Home", "Cart", "Favirote", "Profile"],
-        icons: const [Icons.home, Icons.shopping_bag, Icons.star, Icons.person],
-        tabSize: 50,
-        tabBarHeight: 60,
-        textStyle: const TextStyle(
-          fontSize: 15,
-          color: textColor,
-          fontWeight: FontWeight.bold,
-        ),
-        tabIconColor: textColor,
-        tabIconSize: 28.0,
-        tabIconSelectedSize: 26.0,
-        tabSelectedColor: bgColor2,
-        tabIconSelectedColor: Colors.white,
-        tabBarColor: Colors.white,
-        onTabItemSelected: (int value) {
-          // setState(() {
-          //   _tabController.index = value;
-          // });
-          // print(_tabController.index = 0);
-          if (value == 1) {
-            context.go('/home/cart');
-          }
-        },
-      ),
+      bottomNavigationBar: getBottomNavigationBar(context, 0),
       body: SafeArea(
         child: SingleChildScrollView(
           child: Container(

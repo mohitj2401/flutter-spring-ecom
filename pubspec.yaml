@@ -48,6 +48,9 @@ dependencies:
   google_fonts: ^3.0.1
   shimmer: ^2.0.0
   motion_tab_bar_v2: ^0.2.6
+  # fancy_bottom_navigation: ^0.3.3
+  circle_nav_bar: ^2.0.1+1
+  awesome_bottom_bar: ^1.2.2
 
 dev_dependencies:
   flutter_test:

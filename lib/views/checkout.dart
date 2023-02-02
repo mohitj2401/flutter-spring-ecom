@@ -1,5 +1,6 @@
 import 'package:ecom_spring/constants/color.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 class CheckoutScreen extends StatefulWidget {
   const CheckoutScreen({Key? key}) : super(key: key);
@@ -244,11 +245,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                 child: Row(
                   children: [
                     InkWell(
-                      onTap: () {
-                        setState(() {
-                          checked = !checked;
-                        });
-                      },
+                      onTap: () {},
                       child: Container(
                         padding: const EdgeInsets.all(3),
                         margin: const EdgeInsets.symmetric(vertical: 15),
@@ -289,7 +286,9 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                     ),
                     backgroundColor: darkbgColor,
                   ),
-                  onPressed: () {},
+                  onPressed: () {
+                    context.go('/home/cart/payment');
+                  },
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: const [

@@ -1,5 +1,6 @@
 import 'package:ecom_spring/constants/color.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 class PaymentScreen extends StatefulWidget {
   const PaymentScreen({Key? key}) : super(key: key);
@@ -41,14 +42,17 @@ class _PaymentScreenState extends State<PaymentScreen> {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Container(
-                      padding: const EdgeInsets.all(10),
-                      child: const CircleAvatar(
-                        radius: 20,
-                        backgroundColor: darkbgColor,
-                        child: Icon(
-                          Icons.arrow_back,
-                          color: Colors.white,
+                    InkWell(
+                      onTap: () => context.pop(),
+                      child: Container(
+                        padding: const EdgeInsets.all(10),
+                        child: const CircleAvatar(
+                          radius: 20,
+                          backgroundColor: darkbgColor,
+                          child: Icon(
+                            Icons.arrow_back,
+                            color: Colors.white,
+                          ),
                         ),
                       ),
                     ),
@@ -186,7 +190,7 @@ class _PaymentScreenState extends State<PaymentScreen> {
                       ],
                     );
                   },
-                  itemCount: 3,
+                  itemCount: 1,
                 ),
               ),
               const SizedBox(

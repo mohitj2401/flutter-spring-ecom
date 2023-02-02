@@ -1,6 +1,8 @@
 import 'package:ecom_spring/constants/color.dart';
+import 'package:ecom_spring/widgets/bottomNavigation.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:motion_tab_bar_v2/motion-tab-bar.dart';
 
 class CartDetailScreen extends StatefulWidget {
   const CartDetailScreen({Key? key}) : super(key: key);
@@ -96,7 +98,7 @@ class _CartDetailScreenState extends State<CartDetailScreen> {
       //         ))
       //   ],
       // ),
-
+      bottomNavigationBar: getBottomNavigationBar(context, 1),
       body: SafeArea(
           child: SizedBox(
         width: MediaQuery.of(context).size.width,
@@ -124,8 +126,9 @@ class _CartDetailScreenState extends State<CartDetailScreen> {
                         ),
                       ),
                     ),
+                    // Container(),
                     const SizedBox(
-                      width: 30,
+                      width: 40,
                     ),
                     Row(
                       children: [
@@ -374,7 +377,9 @@ class _CartDetailScreenState extends State<CartDetailScreen> {
                     ),
                     backgroundColor: darkbgColor,
                   ),
-                  onPressed: () {},
+                  onPressed: () {
+                    context.go('/home/cart/checkout');
+                  },
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: const [
