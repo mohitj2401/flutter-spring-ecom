@@ -27,6 +27,9 @@ class _CartDetailScreenState extends State<CartDetailScreen> {
       } else {
         cart = null;
       }
+      if (value.statusCode == 401) {
+        context.go('/login');
+      }
       isLoading = false;
       // print(cart?.cartDetails);
       setState(() {});
@@ -182,7 +185,8 @@ class _CartDetailScreenState extends State<CartDetailScreen> {
               ),
               if (cart == null && isLoading == false)
                 Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 15),
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 10, vertical: 15),
                   child: const Text(
                     "Your cart is empty.",
                     style: TextStyle(
@@ -505,7 +509,7 @@ class _CartDetailScreenState extends State<CartDetailScreen> {
                       backgroundColor: darkbgColor,
                     ),
                     onPressed: () {
-                      context.go('/home/cart/checkout');
+                      context.go('/home/cart/checkout', extra: cart);
                     },
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,

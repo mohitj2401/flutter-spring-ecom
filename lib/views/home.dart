@@ -1,9 +1,11 @@
 import 'package:ecom_spring/constants/color.dart';
 import 'package:ecom_spring/constants/variables.dart';
+import 'package:ecom_spring/models/cart-detail.dart';
 import 'package:ecom_spring/models/product.dart';
 import 'package:ecom_spring/models/productCategory.dart';
 import 'package:ecom_spring/services/category_service.dart';
 import 'package:ecom_spring/services/product_service.dart';
+import 'package:ecom_spring/services/shopping.dart';
 import 'package:ecom_spring/widgets/bottomNavigation.dart';
 // import 'package:fancy_bottom_navigation/fancy_bottom_navigation.dart';
 import 'package:flutter/material.dart';
@@ -35,6 +37,13 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
         isLoading = false;
       });
     });
+  }
+
+  addToCart(Product product) {
+    CartDetail cartDetail = CartDetail(
+        product_id: product.id, quantity: 1, unit_price: product.unitPrice);
+    ShoppingService shoppingService = ShoppingService();
+    shoppingService.addToCart(cartDetail).then((value) => {});
   }
 
   getProductByCategoryId() {
@@ -164,7 +173,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                       ),
                     )),
                     IconButton(
-                        onPressed: () {}, icon: const Icon(Icons.do_not_touch))
+                        onPressed: () {}, icon: const Icon(Icons.search_sharp))
                   ],
                 ),
                 const SizedBox(
@@ -349,7 +358,9 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                                                   padding: const EdgeInsets
                                                           .symmetric(
                                                       horizontal: 10)),
-                                              onPressed: () {},
+                                              onPressed: () {
+                                                addToCart(products[index]);
+                                              },
                                               child: const Text("Buy"),
                                             )
                                           ],

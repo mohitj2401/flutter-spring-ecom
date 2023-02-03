@@ -53,7 +53,7 @@ class ProductService {
             response.data['content'].isEmpty) {
         } else {
           response.data['content'].forEach((ele) {
-            product.add(Product.fromJson(ele));
+            product.add(Product.fromMap(ele));
           });
         }
         // Alert.successLogin();

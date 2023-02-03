@@ -1,9 +1,18 @@
 import 'package:ecom_spring/constants/color.dart';
+import 'package:ecom_spring/models/address.dart';
+import 'package:ecom_spring/models/cart.dart';
+import 'package:ecom_spring/models/country.dart';
+import 'package:ecom_spring/models/order-item.dart';
+import 'package:ecom_spring/models/order.dart';
+import 'package:ecom_spring/models/purchase.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:ndialog/ndialog.dart';
+import 'package:razorpay_flutter/razorpay_flutter.dart';
 
 class CheckoutScreen extends StatefulWidget {
-  const CheckoutScreen({Key? key}) : super(key: key);
+  final Cart cart;
+  const CheckoutScreen({Key? key, required this.cart}) : super(key: key);
 
   @override
   State<CheckoutScreen> createState() => _CheckoutScreenState();
@@ -17,15 +26,53 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
   TextEditingController street = TextEditingController();
   TextEditingController zipcode = TextEditingController();
   TextEditingController phone = TextEditingController();
+  TextEditingController email = TextEditingController();
+  TextEditingController country = TextEditingController();
   bool checked = true;
-  int quantity = 1;
+  int quantity = 0;
+  var formKey = GlobalKey<FormState>();
+  // late Razorpay _razorpay;
+  // increament() {
+  //   quantity++;
+  // }
 
-  increament() {
-    quantity++;
-  }
+  // decreament() {
+  //   quantity = quantity > 1 ? quantity-- : quantity;
+  // }
 
-  decreament() {
-    quantity = quantity > 1 ? quantity-- : quantity;
+  submit() {
+    if (formKey.currentState!.validate()) {
+      Address address = Address(
+        firstName: firstName.text,
+        lastName: lastName.text,
+        email: email.text,
+        phone: phone.text,
+        state: state.text,
+        city: city.text,
+        country: country.text,
+        zipCode: zipcode.text,
+      );
+      // print(address);
+      List<OrderItem> orderItems = [];
+      widget.cart.cartDetails!.forEach((element) {
+        quantity = quantity + element.quantity!;
+        orderItems.add(OrderItem(
+          imageUrl: element.product!.imageUrl,
+          unitPrice: element.product!.unitPrice,
+          quantity: element.quantity,
+          productId: element.product!.id,
+        ));
+      });
+      Order order =
+          Order(totalPrice: widget.cart.totalAmount!, totalQuantity: quantity);
+      Purchase purchase = Purchase(
+        billingAddress: address,
+        shippingAddress: address,
+        orderItems: orderItems,
+        order: order,
+      );
+      context.go('/home/cart/payment', extra: purchase);
+    }
   }
 
   @override
@@ -141,100 +188,131 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
               const SizedBox(
                 height: 15,
               ),
-              SizedBox(
-                width: MediaQuery.of(context).size.width * 0.9,
-                child: Row(
+              Form(
+                key: formKey,
+                child: Column(
                   children: [
-                    Expanded(
-                      child: Column(
+                    SizedBox(
+                      width: MediaQuery.of(context).size.width * 0.9,
+                      child: Row(
                         children: [
-                          getTextFieldWithLable(
-                            hintText: "Enter First Name",
-                            textEditingController: firstName,
-                            onValidate: (value) {
-                              return null;
-                            },
+                          Expanded(
+                            child: Column(
+                              children: [
+                                getTextFieldWithLable(
+                                  hintText: "Enter First Name",
+                                  textEditingController: firstName,
+                                  onValidate: (value) {
+                                    if (value!.isEmpty) {
+                                      return "Field is required";
+                                    }
+                                    return null;
+                                  },
+                                )
+                              ],
+                            ),
+                          ),
+                          const SizedBox(
+                            width: 15,
+                          ),
+                          Expanded(
+                            child: Column(
+                              children: [
+                                getTextFieldWithLable(
+                                  hintText: "Enter Last Name",
+                                  textEditingController: lastName,
+                                  onValidate: (value) {
+                                    if (value!.isEmpty) {
+                                      return "Field is required";
+                                    }
+                                    return null;
+                                  },
+                                )
+                              ],
+                            ),
                           )
                         ],
                       ),
                     ),
-                    const SizedBox(
-                      width: 15,
-                    ),
-                    Expanded(
-                      child: Column(
-                        children: [
-                          getTextFieldWithLable(
-                            hintText: "Enter Last Name",
-                            textEditingController: lastName,
-                            onValidate: (value) {
-                              return null;
-                            },
-                          )
-                        ],
+                    SizedBox(
+                      width: MediaQuery.of(context).size.width * 0.9,
+                      child: getTextFieldWithLable(
+                        hintText: "Enter Phone Number",
+                        textEditingController: phone,
+                        onValidate: (value) {
+                          if (value!.isEmpty) {
+                            return "Field is required";
+                          }
+                          return null;
+                        },
                       ),
-                    )
+                    ),
+                    SizedBox(
+                      width: MediaQuery.of(context).size.width * 0.9,
+                      child: getTextFieldWithLable(
+                        hintText: "Email",
+                        textEditingController: email,
+                        onValidate: (value) {
+                          if (value!.isEmpty) {
+                            return "Field is required";
+                          }
+                          return null;
+                        },
+                      ),
+                    ),
+                    SizedBox(
+                      width: MediaQuery.of(context).size.width * 0.9,
+                      child: getTextFieldWithLable(
+                        hintText: "Enter City Name",
+                        textEditingController: city,
+                        onValidate: (value) {
+                          if (value!.isEmpty) {
+                            return "Field is required";
+                          }
+                          return null;
+                        },
+                      ),
+                    ),
+                    SizedBox(
+                      width: MediaQuery.of(context).size.width * 0.9,
+                      child: getTextFieldWithLable(
+                        hintText: "Enter State Name",
+                        textEditingController: state,
+                        onValidate: (value) {
+                          if (value!.isEmpty) {
+                            return "Field is required";
+                          }
+                          return null;
+                        },
+                      ),
+                    ),
+                    SizedBox(
+                      width: MediaQuery.of(context).size.width * 0.9,
+                      child: getTextFieldWithLable(
+                        hintText: "Enter Country Name",
+                        textEditingController: country,
+                        onValidate: (value) {
+                          if (value!.isEmpty) {
+                            return "Field is required";
+                          }
+                          return null;
+                        },
+                      ),
+                    ),
+                    SizedBox(
+                      width: MediaQuery.of(context).size.width * 0.9,
+                      child: getTextFieldWithLable(
+                        hintText: "Enter Street",
+                        textEditingController: street,
+                        onValidate: (value) {
+                          if (value!.isEmpty) {
+                            return "Field is required";
+                          }
+                          return null;
+                        },
+                      ),
+                    ),
                   ],
-                ),
-              ),
-              SizedBox(
-                width: MediaQuery.of(context).size.width * 0.9,
-                child: getTextFieldWithLable(
-                  hintText: "Enter Phone Number",
-                  textEditingController: phone,
-                  onValidate: (value) {
-                    return null;
-                  },
-                ),
-              ),
-              SizedBox(
-                width: MediaQuery.of(context).size.width * 0.9,
-                child: getTextFieldWithLable(
-                  hintText: "Email",
-                  textEditingController: phone,
-                  onValidate: (value) {
-                    return null;
-                  },
-                ),
-              ),
-              SizedBox(
-                width: MediaQuery.of(context).size.width * 0.9,
-                child: getTextFieldWithLable(
-                  hintText: "Enter City Name",
-                  textEditingController: city,
-                  onValidate: (value) {
-                    return null;
-                  },
-                ),
-              ),
-              SizedBox(
-                width: MediaQuery.of(context).size.width * 0.9,
-                child: getTextFieldWithLable(
-                  hintText: "Enter State Name",
-                  textEditingController: city,
-                  onValidate: (value) {
-                    return null;
-                  },
-                ),
-              ),
-              SizedBox(
-                width: MediaQuery.of(context).size.width * 0.9,
-                child: getTextFieldWithLable(
-                  hintText: "Enter Country Name",
-                  textEditingController: city,
-                  onValidate: (value) {
-                    return null;
-                  },
-                ),
-              ),
-              SizedBox(
-                width: MediaQuery.of(context).size.width * 0.9,
-                child: getTextFieldWithLable(
-                  hintText: "Enter Street",
-                  textEditingController: city,
-                  onValidate: (value) {
-                    return null;
-                  },
                 ),
               ),
               const SizedBox(
@@ -287,7 +365,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                     backgroundColor: darkbgColor,
                   ),
                   onPressed: () {
-                    context.go('/home/cart/payment');
+                    submit();
                   },
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -329,6 +407,7 @@ Widget getTextFieldWithLable({
       mainAxisAlignment: MainAxisAlignment.start,
       children: [
         TextFormField(
+          controller: textEditingController,
           validator: onValidate,
           obscureText: isObsecure,
           decoration: InputDecoration(

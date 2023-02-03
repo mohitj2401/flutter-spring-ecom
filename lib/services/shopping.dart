@@ -2,6 +2,7 @@ import 'package:dio/dio.dart';
 import 'package:ecom_spring/constants/variables.dart';
 import 'package:ecom_spring/models/cart-detail.dart';
 import 'package:ecom_spring/models/cart.dart';
+import 'package:ecom_spring/models/purchase.dart';
 import 'package:ecom_spring/models/response.dart';
 import 'package:ecom_spring/services/alert.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
@@ -10,6 +11,9 @@ import 'package:shared_preferences/shared_preferences.dart';
 class ShoppingService {
   String shoppingCart = 'cart';
   String deleteItemCartUrl = 'cart/delete-cart-item/';
+  String checkout = baseUrl + 'checkout/purchase';
+  String emptyCart = baseUrl + 'cart/empty-cart';
+
   Future<ResponseModel> getCart() async {
     try {
       SharedPreferences pref = await SharedPreferences.getInstance();
@@ -41,10 +45,15 @@ class ShoppingService {
         } else {
           Alert.errorMessage("Something Went Wrong");
         }
+      }
+      if (er.response!.statusCode == 401) {
+        return ResponseModel(
+            message: "", output: null, statusCode: er.response!.statusCode);
       } else {
         Alert.errorMessage("Something Went Wrong");
       }
       EasyLoading.dismiss();
+
       return ResponseModel(message: "", output: null, statusCode: 400);
     } catch (e) {
       print(e.toString());
@@ -56,6 +65,7 @@ class ShoppingService {
   Future<ResponseModel> addToCart(CartDetail cartDetail,
       {String type = ''}) async {
     try {
+      EasyLoading.show(status: "Loading...");
       SharedPreferences pref = await SharedPreferences.getInstance();
       String? token = pref.getString("TOKEN");
       // print(token);
@@ -74,6 +84,7 @@ class ShoppingService {
             Alert.successMessage("Product added to cart");
           }
         }
+        EasyLoading.dismiss();
       }
       return ResponseModel(message: "", output: null, statusCode: 200);
     } on DioError catch (er) {
@@ -89,6 +100,7 @@ class ShoppingService {
       } else {
         Alert.errorMessage("Something Went Wrong");
       }
+      print(er.response!.statusCode);
       EasyLoading.dismiss();
       return ResponseModel(message: "", output: null, statusCode: 400);
     } catch (e) {
@@ -133,6 +145,96 @@ class ShoppingService {
       } else {
         Alert.errorMessage("Something Went Wrong");
       }
+      EasyLoading.dismiss();
+      return ResponseModel(message: "", output: null, statusCode: 400);
+    } catch (e) {
+      print(e.toString());
+      EasyLoading.dismiss();
+      return ResponseModel(message: "", output: null, statusCode: 400);
+    }
+  }
+
+  Future<ResponseModel> confirmOrder(Purchase purchase) async {
+    try {
+      SharedPreferences pref = await SharedPreferences.getInstance();
+      String? token = pref.getString("TOKEN");
+      // print(token);
+      if (token != null) {
+        Options options = Options(headers: {
+          "Content-Type": "application/json",
+          "X-Requested-With": "XMLHttpRequest",
+          'Authorization': 'Bearer $token',
+        });
+        Dio dio = Dio();
+        Response res =
+            await dio.post(checkout, options: options, data: purchase.toMap());
+        // print(res.data);
+        if (res.statusCode == 200) {
+          return ResponseModel(
+              message: "",
+              output: res.data['orderTrackingNumber'],
+              statusCode: 200);
+        }
+      }
+      return ResponseModel(message: "", output: null, statusCode: 200);
+    } on DioError catch (er) {
+      if (er.response!.statusCode == 422) {
+        if (er.response!.data["message"].toString().contains("Username")) {
+          Alert.errorMessage("Username Already registered");
+        }
+        if (er.response!.data["message"].toString().contains("Email")) {
+          Alert.errorMessage("Email Already registered");
+        } else {
+          Alert.errorMessage("Something Went Wrong");
+        }
+      } else {
+        Alert.errorMessage("Something Went Wrong");
+      }
+      print(er.response!.statusCode);
+      EasyLoading.dismiss();
+      return ResponseModel(message: "", output: null, statusCode: 400);
+    } catch (e) {
+      print(e.toString());
+      EasyLoading.dismiss();
+      return ResponseModel(message: "", output: null, statusCode: 400);
+    }
+  }
+
+  Future<ResponseModel> emptyCartFun() async {
+    try {
+      SharedPreferences pref = await SharedPreferences.getInstance();
+      String? token = pref.getString("TOKEN");
+      // print(token);
+      if (token != null) {
+        Options options = Options(headers: {
+          "Content-Type": "application/json",
+          "X-Requested-With": "XMLHttpRequest",
+          'Authorization': 'Bearer $token',
+        });
+        Dio dio = Dio();
+        Response res = await dio.post(emptyCart, options: options);
+        // print(res.data);
+        if (res.statusCode == 200) {
+          return ResponseModel(message: "", output: null, statusCode: 200);
+        }
+        return ResponseModel(
+            message: "", output: null, statusCode: res.statusCode);
+      }
+      return ResponseModel(message: "", output: null, statusCode: 400);
+    } on DioError catch (er) {
+      if (er.response!.statusCode == 422) {
+        if (er.response!.data["message"].toString().contains("Username")) {
+          Alert.errorMessage("Username Already registered");
+        }
+        if (er.response!.data["message"].toString().contains("Email")) {
+          Alert.errorMessage("Email Already registered");
+        } else {
+          Alert.errorMessage("Something Went Wrong");
+        }
+      } else {
+        Alert.errorMessage("Something Went Wrong");
+      }
+      print(er.response!.statusCode);
       EasyLoading.dismiss();
       return ResponseModel(message: "", output: null, statusCode: 400);
     } catch (e) {

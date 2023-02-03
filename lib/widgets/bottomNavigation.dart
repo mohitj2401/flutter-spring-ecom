@@ -34,6 +34,9 @@ Widget getBottomNavigationBar(BuildContext context, int visit) {
       if (index == 0) {
         context.go('/home');
       }
+      if (index == 2) {
+        context.go('/home/profile');
+      }
       // visit = 1;
     },
     chipStyle: const ChipStyle(convexBridge: true, background: bgColor2),

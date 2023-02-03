@@ -1,31 +1,68 @@
 import 'package:ecom_spring/constants/color.dart';
+import 'package:ecom_spring/models/purchase.dart';
+import 'package:ecom_spring/services/shopping.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:razorpay_flutter/razorpay_flutter.dart';
 
 class PaymentScreen extends StatefulWidget {
-  const PaymentScreen({Key? key}) : super(key: key);
+  final Purchase purchase;
+  const PaymentScreen({Key? key, required this.purchase}) : super(key: key);
 
   @override
   State<PaymentScreen> createState() => _PaymentScreenState();
 }
 
 class _PaymentScreenState extends State<PaymentScreen> {
-  TextEditingController firstName = TextEditingController();
-  TextEditingController lastName = TextEditingController();
-  TextEditingController city = TextEditingController();
-  TextEditingController state = TextEditingController();
-  TextEditingController street = TextEditingController();
-  TextEditingController zipcode = TextEditingController();
-  TextEditingController phone = TextEditingController();
-  bool checked = true;
-  int quantity = 1;
   int selectedPaymentMethod = 0;
-  increament() {
-    quantity++;
+  ShoppingService shoppingService = ShoppingService();
+
+  late Razorpay _razorpay;
+  checkout() {
+    // print(widget.purchase.orderItems![0].productId);
+    var options = {
+      'key': 'rzp_test_Q8gVBnfq9y0ATM',
+      'amount': 100,
+      'name': 'SHOPPER',
+      'description': 'Fine T-Shirt',
+      'prefill': {'contact': '8888888888', 'email': 'test@razorpay.com'}
+    };
+    _razorpay.open(options);
   }
 
-  decreament() {
-    quantity = quantity > 1 ? quantity-- : quantity;
+  @override
+  void initState() {
+    _razorpay = Razorpay();
+    _razorpay.on(Razorpay.EVENT_PAYMENT_SUCCESS, _handlePaymentSuccess);
+    _razorpay.on(Razorpay.EVENT_PAYMENT_ERROR, _handlePaymentError);
+    _razorpay.on(Razorpay.EVENT_EXTERNAL_WALLET, _handleExternalWallet);
+    // TODO: implement initState
+    super.initState();
+  }
+
+  void _handlePaymentSuccess(PaymentSuccessResponse response) {
+    shoppingService.confirmOrder(widget.purchase).then((value) {
+      if (value.statusCode == 200) {
+        shoppingService.emptyCartFun().then((val) {
+          context.go('/home/success', extra: value.output as String);
+        });
+      }
+    });
+  }
+
+  void _handlePaymentError(PaymentFailureResponse response) {
+    // Do something when payment fails
+  }
+
+  void _handleExternalWallet(ExternalWalletResponse response) {
+    // Do something when an external wallet was selected
+  }
+
+  @override
+  void dispose() {
+    _razorpay.clear(); // Removes all listeners
+    // TODO: implement dispose
+    super.dispose();
   }
 
   @override
@@ -207,7 +244,9 @@ class _PaymentScreenState extends State<PaymentScreen> {
                     ),
                     backgroundColor: darkbgColor,
                   ),
-                  onPressed: () {},
+                  onPressed: () {
+                    checkout();
+                  },
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: const [

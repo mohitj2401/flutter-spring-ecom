@@ -1,3 +1,5 @@
+import 'package:ecom_spring/models/cart.dart';
+import 'package:ecom_spring/models/purchase.dart';
 import 'package:ecom_spring/views/cart.dart';
 import 'package:ecom_spring/views/checkout.dart';
 import 'package:ecom_spring/views/home.dart';
@@ -7,6 +9,7 @@ import 'package:ecom_spring/views/product_detail.dart';
 import 'package:ecom_spring/views/profile.dart';
 import 'package:ecom_spring/views/register.dart';
 import 'package:ecom_spring/views/splashscreen.dart';
+import 'package:ecom_spring/views/success.dart';
 import 'package:go_router/go_router.dart';
 
 final GoRouter routers = GoRouter(
@@ -47,12 +50,33 @@ final authRoutes = [
     routes: [
       GoRoute(
         path: 'checkout',
-        builder: (context, state) => const CheckoutScreen(),
+        builder: (context, state) {
+          Cart cart = state.extra as Cart;
+
+          return CheckoutScreen(
+            cart: cart,
+          );
+        },
       ),
       GoRoute(
         path: 'payment',
-        builder: (context, state) => const PaymentScreen(),
+        builder: (context, state) {
+          Purchase purchase = state.extra as Purchase;
+          return PaymentScreen(
+            purchase: purchase,
+          );
+        },
       )
     ],
+  ),
+  GoRoute(
+    path: 'success',
+    builder: (context, state) {
+      String orderId = state.extra as String;
+
+      return PurchaseSuccess(
+        orderId: orderId,
+      );
+    },
   ),
 ];

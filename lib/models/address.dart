@@ -59,4 +59,9 @@ class Address {
 
   factory Address.fromJson(String source) =>
       Address.fromMap(json.decode(source) as Map<String, dynamic>);
+
+  @override
+  String toString() {
+    return 'Address(firstName: $firstName, lastName: $lastName, email: $email, phone: $phone, street2: $street2, street: $street, city: $city, state: $state, country: $country, zipCode: $zipCode)';
+  }
 }

@@ -1,3 +1,5 @@
+import 'package:ecom_spring/constants/routers.dart';
+import 'package:ecom_spring/services/auth.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -11,14 +13,14 @@ class SplashScreen extends StatefulWidget {
 
 class _SplashScreenState extends State<SplashScreen> {
   getTOken() async {
-    SharedPreferences pref = await SharedPreferences.getInstance();
-    // pref.setString("TOKEN", '');
-    var token = pref.getString("TOKEN");
-    if (token == null || token == '') {
-      context.go('/login');
-    } else {
-      context.go('/home');
-    }
+    AuthService _authService = AuthService();
+    _authService.user(context).then((value) {
+      if (value) {
+        context.go('/home');
+      } else {
+        context.go('/login');
+      }
+    });
   }
 
   @override
